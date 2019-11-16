@@ -40,6 +40,15 @@ private:
     Node<T> *root;
     // the number of nodes in the tree
     int node_count;
+    void insertHelper(T,Node<T>*);
+    Node<T> *removeHelper(T,Node<T>*);
+    std::vector<T> *inorderHelper(std::vector<T> *, Node<T>*);
+    std::vector<T> *postorderHelper(std::vector<T> *, Node<T>*);
+    std::vector<T> *preorderHelper(std::vector<T> *, Node<T>*);
+    Node<T> *searchHelper(T,Node<T>*);
+    int get_sizeHelper(Node<T>*);
+    T maxValueHelper(Node<T>*);
+
 };
 
 template<class T>
@@ -68,14 +77,14 @@ template<class T>
     return vec;
 }
 template<class T>
- std::vector<T> * inorderHelper(std::vector<T> *vec, Node<T>* node )
+ std::vector<T> * BST<T>::inorderHelper(std::vector<T> *vec, Node<T>* node )
 {
     if(node->get_left() != NULL){
-        vec = inorderHelper(vec, node->get_left());
+        inorderHelper(vec, node->get_left());
     }
     vec->push_back(node->get_data());
     if(node->get_right() != NULL){
-        vec = inorderHelper(vec, node->get_right());
+        inorderHelper(vec, node->get_right());
     }
     return vec;
 }
@@ -90,14 +99,14 @@ template<class T>
     return vec;
 }
 template<class T>
- std::vector<T> * preorderHelper(std::vector<T> *vec, Node<T>* node )
+ std::vector<T> * BST<T>::preorderHelper(std::vector<T> *vec, Node<T>* node )
 {
     vec->push_back(node->get_data());
     if(node->get_left() != NULL){
-        vec = preorderHelper(vec, node->get_left());
+        preorderHelper(vec, node->get_left());
     }
     if(node->get_right() != NULL){
-        vec = preorderHelper(vec, node->get_right());
+        preorderHelper(vec, node->get_right());
     }
     return vec;
 }
@@ -112,13 +121,13 @@ template<class T>
     return vec;
 }
 template<class T>
- std::vector<T> * postorderHelper(std::vector<T> *vec, Node<T>* node )
+ std::vector<T> * BST<T>::postorderHelper(std::vector<T> *vec, Node<T>* node )
 {
     if(node->get_left() != NULL){
-        vec = postorderHelper(vec, node->get_left());
+        postorderHelper(vec, node->get_left());
     }
     if(node->get_right() != NULL){
-        vec = postorderHelper(vec, node->get_right());
+        postorderHelper(vec, node->get_right());
     }
     vec->push_back(node->get_data());
     return vec;
@@ -134,7 +143,7 @@ void BST<T>::insert(T new_data)
     insertHelper(new_data, root);
 }
 template<class T>
-void insertHelper(T new_data, Node<T>* node){
+void BST<T>::insertHelper(T new_data, Node<T>* node){
     if(node->get_data() == new_data) return;
     if(node->get_left() == NULL && new_data < node->get_data()){
         node->set_left(new Node<T>(new_data));
@@ -158,7 +167,7 @@ Node<T> *BST<T>::search(T val)
 }
 
 template<class T>
-Node<T>* searchHelper(T val, Node<T>* node)
+Node<T>* BST<T>::searchHelper(T val, Node<T>* node)
 {
     if(node == NULL){
         return NULL;
@@ -184,7 +193,7 @@ void BST<T>::remove(T val)
     removeHelper(val, root);
 }
 template<class T>
-Node<T>* removeHelper(T val, Node<T>* node){
+Node<T>* BST<T>::removeHelper(T val, Node<T>* node){
     Node<T>* tmp;
     if(node == NULL) return NULL;
     else if(val > node->get_data()){
@@ -213,7 +222,7 @@ Node<T>* removeHelper(T val, Node<T>* node){
     }
 }
 template<class T>
-T maxValueHelper(Node<T>* node){
+T BST<T>::maxValueHelper(Node<T>* node){
     if(node->get_right() == NULL){
         return node->get_data();
     }
@@ -229,7 +238,7 @@ int BST<T>::get_size()
     return(get_sizeHelper(root));
 }
 template<class T>
-int get_sizeHelper(Node<T>* node)
+int BST<T>::get_sizeHelper(Node<T>* node)
 {
     if(node == NULL){
         return 0;
