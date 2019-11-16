@@ -135,6 +135,7 @@ void BST<T>::insert(T new_data)
 }
 template<class T>
 void insertHelper(T new_data, Node<T>* node){
+    if(node->get_data() == new_data) return;
     if(node->get_left() == NULL && new_data < node->get_data()){
         node->set_left(new Node<T>(new_data));
     }
